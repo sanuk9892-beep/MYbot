@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title> SANU AI — Smart tools for everyone</title>
+  <meta name="description" content=" SANU AI website template with a live chat demo, pricing, and a contact form — all in one HTML file." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🤖</text></svg>">
+  <style>
+    :root{
+      --bg: #0b1020;
+      --surface: #121a2b;
+      --elev: #18223a;
+      --text: #e7ecf5;
+      --muted: #a7b1c3;
+      --brand: #7c5cff;
+      --brand-2:#1ee0e0;
+      --ring: rgba(124,92,255,.5);
+      --ok: #22c55e;
+      --warn:#f59e0b;
+      --err:#ef4444;
+      --shadow: 0 10px 30px rgba(0,0,0,.35), 0 2px 10px rgba(124,92,255,.15);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(124,92,255,.25), transparent 60%),
+                  radial-gradient(800px 600px at 10% 10%, rgba(30,224,224,.18), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.6; 
+    }
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Layout */
+    .container{ width:min(1120px, 92%); margin-inline:auto; }
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(10px);
+      background: linear-gradient(to bottom, rgba(11,16,32,.8), rgba(11,16,32,.4));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 0; }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
+    .logo{width:34px; height:34px; border-radius:12px; background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      display:grid; place-items:center; box-shadow:var(--shadow)}
+    .logo span{font-size:18px}
+    .menu{display:flex; align-items:center; gap:18px; color:var(--muted)}
+    .menu a{padding:8px 10px; border-radius:10px}
+    .menu a:hover{background:rgba(255,255,255,.06); color:var(--text)}
+    .cta{display:flex; gap:10px}
+    .btn{border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); color:var(--text);
+         padding:10px 14px; border-radius:12px; box-shadow:var(--shadow); cursor:pointer; font-weight:600}
+    .btn:hover{border-color:rgba(255,255,255,.2)}
+    .btn.brand{background:linear-gradient(135deg, var(--brand), var(--brand-2)); border:none}
+
+    /* Hero */
+    .hero{display:grid; grid-template-columns: 1.2fr .8fr; gap:34px; align-items:center; padding:60px 0 40px}
+    .badge{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; font-size:12px; color:var(--muted);
+           background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1)}
+    .hero h1{font-size: clamp(34px, 5vw, 62px); line-height:1.05; margin:14px 0}
+    .sub{font-size: clamp(15px, 2.2vw, 18px); color:var(--muted); max-width:60ch}
+    .glow-card{
+      background: radial-gradient(400px 300px at 30% 20%, rgba(124,92,255,.25), transparent 40%), var(--surface);
+      border:1px solid rgba(255,255,255,.08); border-radius:18px; box-shadow:var(--shadow); padding:20px;
+    }
+
+    /* Features */
+    .features{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin:26px 0 6px}
+    .card{background:var(--surface); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:18px; box-shadow:var(--shadow)}
+    .card h3{margin:8px 0 8px}
+    .kpi{display:flex; gap:14px; align-items:center}
+    .kpi div{font-size:30px}
+    .muted{color:var(--muted)}
+
+    /* Chat demo */
+    .chat{display:grid;grid-template-rows:auto 1fr auto; height:460px}
+    .chat-log{overflow:auto; padding:10px; display:flex; flex-direction:column; gap:10px;}
+    .bubble{max-width:76%; padding:10px 12px; border-radius:14px; border:1px solid rgba(255,255,255,.1)}
+    .bubble.user{align-self:flex-end; background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04))}
+    .bubble.ai{align-self:flex-start; background: linear-gradient(135deg, rgba(124,92,255,.22), rgba(30,224,224,.18))}
+    .chat-input{display:flex; gap:10px; padding:10px}
+    .chat-input input{flex:1; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:#0e1529; color:var(--text)}
+    /* Sections */
+    section{padding:60px 0}
+    .section-title{font-size:28px; margin:0 0 14px}
+    .grid-2{display:grid; grid-template-columns: 1fr 1fr; gap:18px}
+    /* Pricing */
+    .pricing{display:grid; grid-template-columns: repeat(3,1fr); gap:18px}
+    .price{font-size:40px; font-weight:800}
+    .small{font-size:12px; color:var(--muted)}
+    /* Footer */
+    footer{padding:40px 0; color:var(--muted); text-align:center}
+
+    /* Responsive */
+    @media (max-width: 940px){
+      .hero{grid-template-columns:1fr;}
+      .features{grid-template-columns:1fr 1fr}
+      .pricing{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
+    }
+    @media (max-width: 600px){
+      .menu{display:none}
+      .features{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo"><span>AI</span></div>
+        <div>Aurora <span class="muted">AI</span></div>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#demo">Demo</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="cta">
+        <button id="themeBtn" class="btn" aria-label="Toggle theme">Toggle theme</button>
+        <a class="btn brand" href="#demo">Try the Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <div class="badge">✨ New: On‑device summarizer & chat</div>
+        <h1 id="hero-title">Build with AI — faster, safer, and beautifully.</h1>
+        <p class="sub">A sleek, production‑ready website template for AI products. Includes feature cards, an in‑browser chat demo, responsive pricing, and a contact form — all in a single HTML file.</p>
+        <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
+          <a href="#pricing" class="btn">See pricing</a>
+          <a href="#demo" class="btn brand">Open chat demo</a>
+        </div>
+        <div class="muted" style="margin-top:10px">No backend required. Drop into any static host.</div>
+      </div>
+      <div class="glow-card">
+        <div class="kpi">
+          <div>🚀</div>
+          <div>
+            <div style="font-weight:700">Speed up launch</div>
+            <div class="muted">Copy, tweak, ship today</div>
+          </div>
+        </div>
+        <hr style="border-color: rgba(5, 2, 39, 0.007)">
+        <div class="kpi">
+          <div>🛡️</div>
+          <div>
+            <div style="font-weight:700">Privacy‑first</div>
+            <div class="muted">Demo runs in your browser</div>
+          </div>
+        </div>
+        <hr style="border-color: rgba(255,255,255,.08)">
+        <div class="kpi">
+          <div>🎨</div>
+          <div>
+            <div style="font-weight:700">Refined UI</div>
+            <div class="muted">Modern gradients & glass</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" aria-labelledby="features-title">
+      <h2 class="section-title" id="features-title">Everything you need</h2>
+      <div class="features">
+        <article class="card">
+          <h3>Chat & Q&A</h3>
+          <p class="muted">Try the in‑browser chatbot. Swap the stub for your API when you’re ready.</p>
+        </article>
+        <article class="card">
+          <h3>Embeddings‑ready</h3>
+          <p class="muted">Hook in vector search (Pinecone, Supabase, pgvector) with a single fetch.</p>
+        </article>
+        <article class="card">
+          <h3>Responsive & Accessible</h3>
+          <p class="muted">Keyboard friendly, ARIA labels, and high‑contrast controls out of the box.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Demo -->
+    <section id="demo" aria-labelledby="demo-title">
+      <h2 class="section-title" id="demo-title">Live Chat Demo</h2>
+      <div class="glow-card chat" role="region" aria-label="Chat widget">
+        <div id="chatLog" class="chat-log" aria-live="polite"></div>
+        <form id="chatForm" class="chat-input" autocomplete="off">
+          <label for="prompt" class="visually-hidden">Message</label>
+          <input id="prompt" name="prompt" placeholder="Ask me anything… (e.g., Summarize the benefits)" required/>
+          <button class="btn brand" type="submit">Send</button>
+        </form>
+      </div>
+      <p class="small" style="margin-top:8px">This demo is offline and uses a tiny, local heuristic model. Replace <code>localAI()</code> with your API call to integrate a real model.</p>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" aria-labelledby="pricing-title">
+      <h2 class="section-title" id="pricing-title">Simple pricing</h2>
+      <div class="pricing">
+        <article class="card">
+          <h3>Starter</h3>
+          <div class="price">$0</div>
+          <p class="muted">For experiments & hobby projects.</p>
+          <ul>
+            <li>✔ Chat demo</li>
+            <li>✔ Static export</li>
+            <li>— Community support</li>
+          </ul>
+          <button class="btn" aria-label="Choose Starter">Get started</button>
+        </article>
+        <article class="card">
+          <h3>Pro</h3>
+          <div class="price">$19<span class="small">/mo</span></div>
+          <p class="muted">For indie builders and teams.</p>
+          <ul>
+            <li>✔ Everything in Starter</li>
+            <li>✔ API integration</li>
+            <li>✔ Custom domains</li>
+          </ul>
+          <button class="btn brand" aria-label="Choose Pro">Upgrade</button>
+        </article>
+        <article class="card">
+          <h3>Enterprise</h3>
+          <div class="price">Custom</div>
+          <p class="muted">Security reviews and SLAs.</p>
+          <ul>
+            <li>✔ SSO/SAML</li>
+            <li>✔ Fine‑tuning access</li>
+            <li>✔ Priority support</li>
+          </ul>
+          <button class="btn" aria-label="Contact Sales">Contact sales</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 class="section-title" id="contact-title">Contact us</h2>
+      <div class="grid-2">
+        <form class="card" id="contactForm">
+          <label>Name<br>
+            <input style="width:100%; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0e1529; color:var(--text)" required name="name" />
+          </label>
+          <br>
+          <label>Email<br>
+            <input type="email" style="width:100%; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0e1529; color:var(--text)" required name="email" />
+          </label>
+          <br>
+          <label>Message<br>
+            <textarea rows="4" style="width:100%; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0e1529; color:var(--text)" required name="message"></textarea>
+          </label>
+          <br>
+          <button class="btn brand" type="submit">Send message</button>
+          <div id="contactStatus" class="small"></div>
+        </form>
+        <div class="card">
+          <h3>How to integrate a real model</h3>
+          <ol class="muted">
+            <li>Deploy a tiny serverless endpoint (Cloudflare Workers, Vercel) that proxies to your AI provider.</li>
+            <li>Replace <code>localAI()</code> in the script with <code>fetch('/api/chat', { method:'POST', body: JSON.stringify({ prompt }) })</code>.</li>
+            <li>Stream results to the UI with <code>ReadableStream</code> for that buttery feel.</li>
+          </ol>
+          <p class="small">Remember to keep keys on the server. Never ship them in the browser.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div>© <span id="year"></span> Aurora AI — Crafted with ❤️</div>
+    </div>
+  </footer>
+
+  <script>
+    // --- Small utils --------------------------------------------------------
+    const $ = s => document.querySelector(s);
+    const chatLog = $('#chatLog');
+
+    function addBubble(text, who='ai'){
+      const div = document.createElement('div');
+      div.className = `bubble ${who}`;
+      div.textContent = text;
+      chatLog.appendChild(div);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    // --- Local heuristic "AI" (placeholder) --------------------------------
+    function localAI(prompt){
+      const p = prompt.trim();
+      if(!p) return "Ask me about features, pricing, or to summarize.";
+      const lower = p.toLowerCase();
+
+      // Simple intents
+      if(lower.includes('price') || lower.includes('pricing')){
+        return "Starter is free, Pro is $19/mo, and Enterprise is custom. You can upgrade any time.";
+      }
+      if(lower.startsWith('summarize')){
+        const rest = p.slice(9).trim();
+        return rest ? `Summary: ${rest.replace(/\s+/g,' ').split(' ').slice(0,40).join(' ')}...` : "Give me text to summarize.";
+      }
+      if(lower.includes('feature')){
+        return "Key features: chat demo, embeddings‑ready architecture, responsive UI, and accessibility baked in.";
+      }
+      if(lower.match(/hello|hi|hey/)){
+        return "Hey! I’m the demo bot. Ask about pricing or say ‘summarize <text>’.";
+      }
+      if(lower.includes('integrat')){
+        return "Swap localAI() with a fetch to your backend that calls your preferred model. See the Contact section for steps.";
+      }
+      // Fallback: friendly echo
+      return `I hear: “${p}”. For real AI responses, connect an API in the script section.`;
+    }
+
+    // --- Chat form ----------------------------------------------------------
+    $('#chatForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = $('#prompt');
+      const text = input.value;
+      if(!text.trim()) return;
+      addBubble(text, 'user');
+      input.value = '';
+
+      // Simulate thinking
+      const thinking = document.createElement('div');
+      thinking.className = 'bubble ai';
+      thinking.textContent = 'Thinking…';
+      chatLog.appendChild(thinking);
+      chatLog.scrollTop = chatLog.scrollHeight;
+
+      setTimeout(() => {
+        thinking.remove();
+        addBubble(localAI(text), 'ai');
+      }, 500);
+    });
+
+    // --- Contact form (no backend) -----------------------------------------
+    $('#contactForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const status = $('#contactStatus');
+      status.textContent = 'Sending…';
+      setTimeout(()=>{
+        status.textContent = 'Thanks! We\'ll be in touch shortly (demo only).';
+      }, 600);
+    });
+
+    // --- Theme toggle -------------------------------------------------------
+    const themeBtn = document.getElementById('themeBtn');
+    let dark = true;
+    themeBtn.addEventListener('click', ()=>{
+      dark = !dark;
+      document.body.style.background = dark
+        ? "radial-gradient(1200px 800px at 80% -10%, rgba(124,92,255,.25), transparent 60%),\n           radial-gradient(800px 600px at 10% 10%, rgba(30,224,224,.18), transparent 60%),\n           var(--bg)"
+        : "linear-gradient(180deg, #f8fafc, #eef2ff)";
+      document.body.style.color = dark ? 'var(--text)' : '#0b1020';
+    });
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Initial message
+    addBubble('Hi! I\'m SANU\'s demo bot. Ask about pricing or say “summarize <your text>”.');
+  </script>
+</body>
+</html>
